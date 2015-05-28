@@ -1,6 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include<iostream>
 #include<fstream>
 #include<string>
 #include<vector>
@@ -9,15 +10,14 @@ class Config
 {
   public:
     Config();
-    void initConfig(const std::string &file, std::string path);
     bool isReadable(const std::string &file);
-    std::vector<std::string> loadConfig(const std::string &file, std::string &bibpath);
+    void initConfig(const std::string &file, const std::string &path);
+    std::vector<std::string> loadConfig();
     
 
   protected:
     std::string m_configPath;
     std::string m_bibPath;
-    
     
 };
 

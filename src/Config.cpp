@@ -3,8 +3,8 @@
 using namespace std;
 
 Config::Config():
-  m_configPath("~/.bibmasterrc"),
-  m_bibPath(0)
+  m_configPath("/home/xavier/.bibmasterrc"),
+  m_bibPath()
 {
   //Constructor
 }
@@ -15,38 +15,48 @@ bool Config::isReadable(const string &file)
   return !fichier.fail();
 }
 
-void Config::initConfig(const string &file, string path)
+void Config::initConfig(const string &file, const string &path)
 {
-  ofstream initConfigFile(file);
+  ofstream initConfigFile(file.c_str());
 
-  initConfigFile 
-    << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-    << "%        BibMaster configuration file          %" << endl
-    << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-    << "% Created on date" << endl << endl
-    << "@BibPath: " << path << endl;
-}
-
-vector<string> Config::loadConfig(const string &file, string &bibpath)
-{
-  vector<string> config(0);
-  string line;
-  string path;
-
-  if (isReadable(file))
+  if (initConfigFile)
   {
-    ifstream load(file.c_str());
-    while (getline(load, line))
-    {
-      config.push_back(line);
-    }
+    initConfigFile 
+      << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
+      << "%        BibMaster configuration file          %" << endl
+      << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
+      << "% Created on date" << endl << endl
+      << "@BibPath: " << path << endl;
   }
   else
   {
-    cout << "No configuration file found. Writing new one in " <<
-      << configPath << endl;
-    cout << "Where is the .bib database?" << endl;
-    cin >> bibpath;
-    initConfig(path);
+    cout << "Error: unable to write file..." << endl;
   }
+}
+
+vector<string> Config::loadConfig()
+{
+  vector<string> config(0);
+  string line;
+
+  if (!Config::isReadable(m_configPath.c_str()))
+  {
+    cout << "No configuration file found. Writing new one in "
+      << m_configPath << endl;
+    cout << "Where is the .bib database?" << endl;
+    cin >> m_bibPath;
+    Config::initConfig(m_configPath, m_bibPath);
+  }
+  else
+  {
+    cout << "Configuration file loaded!" << endl;
+  }
+
+  ifstream load(m_configPath.c_str());
+  while (getline(load, line))
+  {
+    config.push_back(line);
+  }
+
+  return config;
 }

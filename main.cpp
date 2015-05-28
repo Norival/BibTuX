@@ -23,5 +23,8 @@ int main ()
   
   cout << "Hello! Welcome in Bib Master!" << endl;
 
+  Config currentConfig;
+  currentConfig.loadConfig();
+
   return 0;
 }
