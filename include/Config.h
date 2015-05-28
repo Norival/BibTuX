@@ -12,8 +12,7 @@ class Config
     Config();
     bool isReadable(const std::string &file);
     void initConfig(const std::string &file, const std::string &path);
-    std::vector<std::string> loadConfig();
-    
+    void loadConfig();
 
   protected:
     std::string m_configPath;

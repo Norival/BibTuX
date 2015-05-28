@@ -26,7 +26,7 @@ void Config::initConfig(const string &file, const string &path)
       << "%        BibMaster configuration file          %" << endl
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
       << "% Created on date" << endl << endl
-      << "@BibPath: " << path << endl;
+      << "@BibPath:" << path << endl;
   }
   else
   {
@@ -34,29 +34,42 @@ void Config::initConfig(const string &file, const string &path)
   }
 }
 
-vector<string> Config::loadConfig()
+void Config::loadConfig()
 {
-  vector<string> config(0);
   string line;
 
   if (!Config::isReadable(m_configPath.c_str()))
   {
+    //Verifying presence of configuration file
+    string bib;
     cout << "No configuration file found. Writing new one in "
       << m_configPath << endl;
     cout << "Where is the .bib database?" << endl;
-    cin >> m_bibPath;
-    Config::initConfig(m_configPath, m_bibPath);
+    cin >> bib;
+
+    Config::initConfig(m_configPath, bib);
   }
   else
-  {
     cout << "Configuration file loaded!" << endl;
-  }
 
   ifstream load(m_configPath.c_str());
+
+  /* Reading file and initializing var */
   while (getline(load, line))
   {
-    config.push_back(line);
+    int nline = 1;
+    if (line[0] == '%' || line[0] == ' ')
+      continue;
+    else if (line[0] == '@')
+    {
+      if (line.substr(1, 7) == "BibPath")
+        m_bibPath = line.substr(9);
+    }
+    else
+    {
+      cout << "Bad configuration file..." << endl;
+      cout << "Error in line " << nline;
+    }
+    nline++;
   }
-
-  return config;
 }
