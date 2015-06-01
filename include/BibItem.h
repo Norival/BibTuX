@@ -1,15 +1,19 @@
 #ifndef BIBITEM_H
 #define BIBITEM_H
 
+#include <iostream>
+#include <string>
+#include <vector>
+
 class BibItem
 {
   public:
+    BibItem();
+    const std::string getKey();
 
 
   protected:
-    std::string m_author;
-    std::string m_title;
-    std::string m_label;
+    std::string m_key;
 
 };
 

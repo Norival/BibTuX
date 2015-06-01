@@ -25,7 +25,8 @@ void Config::initConfig(const string &file, const string &path)
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
       << "%        BibMaster configuration file          %" << endl
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-      << "% Created on date" << endl << endl
+      << "% Created on date" << endl
+      << "\n"
       << "@BibPath:" << path << endl;
   }
   else
@@ -55,21 +56,28 @@ void Config::loadConfig()
   ifstream load(m_configPath.c_str());
 
   /* Reading file and initializing var */
+  int nline = 1;
   while (getline(load, line))
   {
-    int nline = 1;
     if (line[0] == '%' || line[0] == ' ')
+    {
       continue;
+      nline++;
+    }
     else if (line[0] == '@')
     {
       if (line.substr(1, 7) == "BibPath")
         m_bibPath = line.substr(9);
     }
+    else if (line.size() < 1)
+    {
+      continue;
+      nline++;
+    }
     else
     {
       cout << "Bad configuration file..." << endl;
-      cout << "Error in line " << nline;
+      cout << "Error in line " << nline << endl;
     }
-    nline++;
   }
 }
