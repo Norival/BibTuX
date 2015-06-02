@@ -14,6 +14,9 @@ class Config
     void initConfig(const std::string &file, const std::string &path);
     void loadConfig();
 
+    static void removeCharacter(std::string &Str, char C);
+
+
   protected:
     std::string m_configPath;
     std::string m_bibPath;

@@ -2,6 +2,13 @@
 
 using namespace std;
 
+void removeCharacter(string &Str, char C)
+{
+  Str.erase( 
+      remove(Str.begin(), Str.end(), C), 
+      Str.end());  
+}
+
 Config::Config():
   m_configPath("/home/xavier/.bibmasterrc"),
   m_bibPath()
