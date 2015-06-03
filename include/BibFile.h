@@ -11,7 +11,7 @@ class BibFile
 {
   public:
     BibFile(std::string bibpath);
-    void readBib(const std::string &bibpath, std::vector<std::string> &file);
+    void readBib(const std::string &bibpath); //std::vector<std::string> &file);
 
 
   protected:

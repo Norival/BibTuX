@@ -11,7 +11,7 @@ BibFile::BibFile(string bibpath):
   //Constructor
 }
 
-BibFile::readBib(const string &bibpath, vector<string> &file)
+void BibFile::readBib(const string &bibpath)//, vector<string> &file)
 {
   ifstream bibfile(bibpath.c_str());
   
@@ -19,39 +19,37 @@ BibFile::readBib(const string &bibpath, vector<string> &file)
   {
     //Création de variables temporaires pour stocker les données
     string line;
+    vector<string> items(0);
+    string itemTmp;
 
     string keyTmp = "";
     string authorTmp = "";
     string journalTmp = "";
     string pagesTmp = "";
     string monthTmp = "";
-    int yearTmp = "";
-    int titleTmp = "";
-    int volumeTmp = "";
-    int numberTmp = "";
+    int yearTmp = 0;
+    int titleTmp = 0;
+    int volumeTmp = 0;
+    int numberTmp = 0;
 
     while (getline(bibfile, line))
     {
+      //Enregistrement des items dans des strings
       if (line[0] != '@')
         continue;
-      else if (line.substr(1, 7) == "Article")
+      else
       {
-        keyTmp = line.substr(9, line.size()-1)
-        while (getline(bibfile, line))
+        itemTmp = "";
+        while (line[0] != '}')
         {
-          if (line[0] != '}')
-          {
-            for (int i = 0; i < line.size(), i++)
-            {
-              switch (line[i])
-              {
-                case 'a' : //Author
-                  if (
-              }
-            }
-          }
+          getline(bibfile, line);
+          itemTmp += line;
         }
+        items.push_back(itemTmp);
       }
     }
+
   }
+  else
+    cout << "Unable to read Bibtex file..." << endl;
 }
