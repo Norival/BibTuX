@@ -50,6 +50,28 @@ void BibFile::readBib(const string &bibpath)//, vector<string> &file)
     }
 
   }
+
+  for (int i = 0; i < items.size(); i++)
+  {
+    //Lecture de tous les items
+    itemTmp = items[i];
+    type = itemTmp.substr(1, 4);
+    int j = 0;
+    while (j < itemTmp.size())
+    {
+      //Récupération de key dans keyTmp
+      if (itemTmp[j] == '{')
+      {
+        while (itemTmp[j+1] != ',')
+        {
+          keyTmp += itemTmp[j+1];
+          j++;
+        }
+      }
+      //Récupération de author dans authorTmp
+
+    }
+  }
   else
     cout << "Unable to read Bibtex file..." << endl;
 }
