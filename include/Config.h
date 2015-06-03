@@ -6,9 +6,12 @@
 #include<string>
 #include<vector>
 #include<algorithm>
+#include<sstream>
+
 
 class Config
 {
+
   public:
     Config();
     bool isReadable(const std::string &file);
@@ -16,6 +19,8 @@ class Config
     void loadConfig();
 
     static void removeCharacter(std::string &Str, char C);
+    template<typename T>
+    static bool fromString(const std::string &Str, T &Dest); 
 
 
   protected:

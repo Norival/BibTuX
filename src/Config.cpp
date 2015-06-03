@@ -9,6 +9,15 @@ void Config::removeCharacter(string &Str, char C)
       Str.end());  
 }
 
+  template<typename T>
+bool Config::fromString(const string &Str, T &Dest)
+{ 
+  // créer un flux à partir de la chaîne donnée 
+  istringstream iss(Str); 
+  // tenter la conversion vers Dest 
+  return iss >> Dest != 0; 
+}
+
 Config::Config():
   m_configPath("/home/xavier/.bibmasterrc"),
   m_bibPath()
