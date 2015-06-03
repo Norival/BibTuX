@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void removeCharacter(string &Str, char C)
+void Config::removeCharacter(string &Str, char C)
 {
   Str.erase( 
       remove(Str.begin(), Str.end(), C), 
