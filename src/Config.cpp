@@ -9,7 +9,6 @@ void Config::removeCharacter(string &Str, char C)
       Str.end());  
 }
 
-  //template<typename T>
 bool Config::fromString(const string &Str, int &Dest)
 { 
   // créer un flux à partir de la chaîne donnée 
@@ -23,6 +22,11 @@ Config::Config():
   m_bibPath()
 {
   //Constructor
+}
+
+const string Config::getBibpath()
+{
+  return m_bibPath;
 }
 
 bool Config::isReadable(const string &file)
