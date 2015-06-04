@@ -29,5 +29,9 @@ int main ()
   Config currentConfig;
   currentConfig.loadConfig();
 
+  cout << "Lecture de la base de données..." << endl;
+  BibFile myBib(currentConfig.getBibpath());
+  myBib.readBib(currentConfig.getBibpath());
+  
   return 0;
 }
