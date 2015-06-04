@@ -113,4 +113,4 @@ void BibFile::readBib(const string &bibpath)//, vector<string> &file)
     cout << "Unable to read Bibtex file..." << endl;
 }
 
-template<typename T>
+//template<typename T>
