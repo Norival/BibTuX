@@ -19,8 +19,8 @@ class Config
     void loadConfig();
 
     static void removeCharacter(std::string &Str, char C);
-    template<typename T>
-    static bool fromString(const std::string &Str, T &Dest); 
+    //template<typename T>
+    static bool fromString(const std::string &Str, int &Dest); 
 
 
   protected:
