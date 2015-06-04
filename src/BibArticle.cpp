@@ -13,8 +13,8 @@ BibArticle::BibArticle(string key,
     string journal,
     string pages,
     string month,
+    string title,
     int year,
-    int title,
     int volume,
     int number
     )

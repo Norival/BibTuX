@@ -13,8 +13,8 @@ struct characteristics
   std::string Journal;
   std::string Pages;
   std::string Month;
+  std::string Title;
   int Year;
-  int Title;
   int Volume;
   int Number;
 };
@@ -28,8 +28,8 @@ class BibArticle : public BibItem
         std::string journal,
         std::string pages,
         std::string month,
+        std::string title,
         int year,
-        int title,
         int volume,
         int number
         );

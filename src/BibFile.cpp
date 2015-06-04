@@ -11,7 +11,7 @@ BibFile::BibFile(string bibpath):
   //Constructor
 }
 
-void BibFile::readBib(const string &bibpath)//, vector<string> &file)
+void BibFile::readBib(const string &bibpath)
 {
   ifstream bibfile(bibpath.c_str());
   
@@ -105,6 +105,15 @@ void BibFile::readBib(const string &bibpath)//, vector<string> &file)
             Config::fromString(str, numberTmp);
           }
         }
+        BibArticle Toto(keyTmp,
+            authorTmp,
+            journalTmp,
+            pagesTmp,
+            monthTmp,
+            titleTmp,
+            yearTmp,
+            volumeTmp,
+            numberTmp);
       }
     }
 
@@ -112,5 +121,3 @@ void BibFile::readBib(const string &bibpath)//, vector<string> &file)
   else
     cout << "Unable to read Bibtex file..." << endl;
 }
-
-//template<typename T>
