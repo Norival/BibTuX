@@ -41,7 +41,7 @@ void BibFile::readBib(const string &bibpath)
       else //Présence d'un @
       {
         keyTmp = line.substr(
-            line.rfind('{') + 1,
+            line.find_first_of('{') + 1,
             line.size() - 1);
         if (line.rfind("Article") != line.npos) //C'est un article
           type = "article";
@@ -52,57 +52,65 @@ void BibFile::readBib(const string &bibpath)
           if (line.rfind("author") != line.npos)
           {
             authorTmp = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
+            cout << authorTmp << endl;
           }
           if (line.rfind("journal") != line.npos)
           {
             journalTmp = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
+            cout << journalTmp << endl;
           }
           if (line.rfind("pages") != line.npos)
           {
             pagesTmp = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
+            cout << pagesTmp << endl;
           }
           if (line.rfind("month") != line.npos)
           {
             monthTmp = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
+            cout << monthTmp << endl;
           }
           if (line.rfind("title") != line.npos)
           {
             titleTmp = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
+            cout << titleTmp << endl;
           }
           
           if (line.rfind("year") != line.npos)
           {
             string str;
             str = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
             Config::fromString(str, yearTmp);
+            cout << yearTmp << endl;
           }
           if (line.rfind("volume") != line.npos)
           {
             string str;
             str = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
             Config::fromString(str, volumeTmp);
+            cout << volumeTmp << endl;
           }
           if (line.rfind("number") != line.npos)
           {
             string str;
             str = line.substr(
-                line.rfind('{') + 1,
-                line.rfind('}') - 1);
+                line.find_first_of('{') + 1,
+                line.find_last_of('}') - line.find_first_of('{') - 1);
             Config::fromString(str, numberTmp);
+            cout << numberTmp << endl;
           }
         }
         BibArticle Toto(keyTmp,
