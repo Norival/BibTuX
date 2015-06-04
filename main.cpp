@@ -14,6 +14,9 @@
 #include<string>
 #include<stdio.h>
 
+#include<BibItem.h>
+#include<BibArticle.h>
+#include<BibFile.h>
 #include<Config.h>
 
 using namespace std;
