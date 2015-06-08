@@ -32,6 +32,7 @@ void BibFile::readBib(const string &bibpath)
     int yearTmp = 0;
     int volumeTmp = 0;
     int numberTmp = 0;
+    map<string, BibArticle> allArticles;
 
     while (getline(bibfile, line))
     {
@@ -113,7 +114,7 @@ void BibFile::readBib(const string &bibpath)
             cout << numberTmp << endl;
           }
         }
-        BibArticle Toto(keyTmp,
+        allArticles[keyTmp.c_str()] = BibArticle(keyTmp,
             authorTmp,
             journalTmp,
             pagesTmp,
