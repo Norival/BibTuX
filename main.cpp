@@ -24,17 +24,19 @@ using namespace std;
 int main ()
 {
   
+  vector<string> listOfKeys(0);
   cout << "Hello! Welcome in Bib Master!" << endl;
 
   Config currentConfig;
   currentConfig.loadConfig();
 
   cout << "Lecture de la base de données..." << endl;
-//  BibFile myBib(currentConfig.getBibpath());
-//  myBib.readBib(currentConfig.getBibpath());
+  BibFile myBib(currentConfig.getBibpath());
+  myBib.readBib(currentConfig.getBibpath());
 
-//  readBib(currentConfig.getBibpath());
+  myBib.getKeys(listOfKeys); 
 
+  cout << listOfKeys[1] << endl;
 
   
   return 0;

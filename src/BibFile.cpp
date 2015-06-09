@@ -13,7 +13,7 @@ BibFile::BibFile(string bibpath):
 void BibFile::readBib(const string &bibpath)
 {
   ifstream bibfile(bibpath.c_str());
-  
+
   if (bibfile)
   {
     //Création de variables temporaires pour stocker les données
@@ -35,84 +35,76 @@ void BibFile::readBib(const string &bibpath)
     while (getline(bibfile, line))
     {
       //Boucle générale, lecture du fichier
-      if (line.rfind('@') == line.npos) //Pas de @
-        continue;
-      else //Présence d'un @
+      //if (line.rfind('@') == line.npos) //Pas de @
+      //continue;
+      if (line.rfind('@') != line.npos) //Présence d'un @
       {
         keyTmp = line.substr(
             line.find_first_of('{') + 1,
-            line.size() - 1);
-        if (line.rfind("Article") != line.npos) //C'est un article
-          typeTmp = "article";
+            line.find_last_of(',') - line.find_first_of('{') - 1);
+      }
+      if (line.rfind("Article") != line.npos) //C'est un article
+        typeTmp = "article";
 
-        while (getline(bibfile, line))
-        {
-          //Lecture des composantes et sockage dans les strings Tmp
-          if (line.rfind("author") != line.npos)
-          {
-            authorTmp = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            cout << authorTmp << endl;
-          }
-          if (line.rfind("journal") != line.npos)
-          {
-            journalTmp = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            cout << journalTmp << endl;
-          }
-          if (line.rfind("pages") != line.npos)
-          {
-            pagesTmp = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            cout << pagesTmp << endl;
-          }
-          if (line.rfind("month") != line.npos)
-          {
-            monthTmp = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            cout << monthTmp << endl;
-          }
-          if (line.rfind("title") != line.npos)
-          {
-            titleTmp = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            cout << titleTmp << endl;
-          }
-          
-          if (line.rfind("year") != line.npos)
-          {
-            string str;
-            str = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            Config::fromString(str, yearTmp);
-            cout << yearTmp << endl;
-          }
-          if (line.rfind("volume") != line.npos)
-          {
-            string str;
-            str = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            Config::fromString(str, volumeTmp);
-            cout << volumeTmp << endl;
-          }
-          if (line.rfind("number") != line.npos)
-          {
-            string str;
-            str = line.substr(
-                line.find_first_of('{') + 1,
-                line.find_last_of('}') - line.find_first_of('{') - 1);
-            Config::fromString(str, numberTmp);
-            cout << numberTmp << endl;
-          }
-        }
+      //Lecture des composantes et sockage dans les strings Tmp
+      if (line.rfind("author") != line.npos)
+      {
+        authorTmp = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+      }
+      if (line.rfind("journal") != line.npos)
+      {
+        journalTmp = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+      }
+      if (line.rfind("pages") != line.npos)
+      {
+        pagesTmp = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+      }
+      if (line.rfind("month") != line.npos)
+      {
+        monthTmp = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+      }
+      if (line.rfind("title") != line.npos)
+      {
+        titleTmp = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+      }
 
+      if (line.rfind("year") != line.npos)
+      {
+        string str;
+        str = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+        Config::fromString(str, yearTmp);
+      }
+      if (line.rfind("volume") != line.npos)
+      {
+        string str;
+        str = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+        Config::fromString(str, volumeTmp);
+      }
+      if (line.rfind("number") != line.npos)
+      {
+        string str;
+        str = line.substr(
+            line.find_first_of('{') + 1,
+            line.find_last_of('}') - line.find_first_of('{') - 1);
+        Config::fromString(str, numberTmp);
+      }
+      Config::removeCharacter(line, ' ');
+      if (line == "}")
+      {
         listOfItems[keyTmp] = new BibItem(typeTmp,
             keyTmp,
             authorTmp,
@@ -125,8 +117,16 @@ void BibFile::readBib(const string &bibpath)
             numberTmp);
       }
     }
-
   }
   else
     cout << "Unable to read Bibtex file..." << endl;
+}
+
+const void BibFile::getKeys(vector<string> &keys)
+{
+  for(map<string, BibItem*>::iterator it = listOfItems.begin(); it != listOfItems.end(); ++it)
+  { 
+    keys.push_back(it->first);
+    //cout << it->first << "\n";
+  }
 }

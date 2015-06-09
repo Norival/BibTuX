@@ -14,6 +14,7 @@ class BibFile
   public:
     BibFile(std::string bibpath);
     void readBib(const std::string &bibpath);
+    const void getKeys(std::vector<std::string> &keys);
 
   protected:
     std::string m_bibPath;

@@ -21,6 +21,7 @@ BibItem::BibItem(string type,
     )
 {
   m_type = type;
+  m_key = key;
   m_author = author;
   m_journal = journal;
   m_pages = pages;
