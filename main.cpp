@@ -13,9 +13,9 @@
 #include<fstream>
 #include<string>
 #include<stdio.h>
+#include<map>
 
 #include<BibItem.h>
-#include<BibArticle.h>
 #include<BibFile.h>
 #include<Config.h>
 
@@ -30,8 +30,12 @@ int main ()
   currentConfig.loadConfig();
 
   cout << "Lecture de la base de données..." << endl;
-  BibFile myBib(currentConfig.getBibpath());
-  myBib.readBib(currentConfig.getBibpath());
+//  BibFile myBib(currentConfig.getBibpath());
+//  myBib.readBib(currentConfig.getBibpath());
+
+//  readBib(currentConfig.getBibpath());
+
+
   
   return 0;
 }

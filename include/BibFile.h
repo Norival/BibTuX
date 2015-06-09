@@ -7,6 +7,7 @@
 #include<vector>
 #include<map>
 
+#include<BibItem.h>
 
 class BibFile
 {
@@ -16,7 +17,7 @@ class BibFile
 
   protected:
     std::string m_bibPath;
-    std::vector<std::string> m_File;
+    std::map<std::string, BibItem*> listOfItems;
 
 
 };

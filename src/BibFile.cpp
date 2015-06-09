@@ -1,5 +1,4 @@
 #include "BibFile.h"
-#include <BibArticle.h>
 #include <Config.h>
 
 using namespace std;
@@ -21,7 +20,7 @@ void BibFile::readBib(const string &bibpath)
     string line;
     //vector<string> items(0);
     //string itemTmp;
-    string type;
+    string typeTmp= "";
 
     string keyTmp = "";
     string authorTmp = "";
@@ -32,7 +31,6 @@ void BibFile::readBib(const string &bibpath)
     int yearTmp = 0;
     int volumeTmp = 0;
     int numberTmp = 0;
-    map<string, BibArticle> allArticles;
 
     while (getline(bibfile, line))
     {
@@ -45,7 +43,7 @@ void BibFile::readBib(const string &bibpath)
             line.find_first_of('{') + 1,
             line.size() - 1);
         if (line.rfind("Article") != line.npos) //C'est un article
-          type = "article";
+          typeTmp = "article";
 
         while (getline(bibfile, line))
         {
@@ -114,7 +112,9 @@ void BibFile::readBib(const string &bibpath)
             cout << numberTmp << endl;
           }
         }
-        allArticles[keyTmp.c_str()] = BibArticle(keyTmp,
+
+        listOfItems[keyTmp] = new BibItem(typeTmp,
+            keyTmp,
             authorTmp,
             journalTmp,
             pagesTmp,
