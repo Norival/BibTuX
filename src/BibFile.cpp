@@ -146,5 +146,29 @@ const void BibFile::listItems(string type)
     }
     cout << endl << "Books:" << endl;
     //Continuer pour les autres types
+    for(itemsIterator = listOfItems.begin();
+        itemsIterator != listOfItems.end();
+        ++itemsIterator)
+    {
+      if (itemsIterator->second->getType() == "Book")
+      {
+        cout << i << " " << itemsIterator->first << ": " 
+          << itemsIterator->second->getTitle() << endl;
+        i++;
+      }
+    }
+    cout << endl << "Miscellaneaous:" << endl;
+    //Continuer pour les autres types
+    for(itemsIterator = listOfItems.begin();
+        itemsIterator != listOfItems.end();
+        ++itemsIterator)
+    {
+      if (itemsIterator->second->getType() == "Misc")
+      {
+        cout << i << " " << itemsIterator->first << ": " 
+          << itemsIterator->second->getTitle() << endl;
+        i++;
+      }
+    }
   }
 }

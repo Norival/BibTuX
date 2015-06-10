@@ -23,6 +23,7 @@ using namespace std;
 
 int main ()
 {
+  string choice;
   
   cout << "Hello! Welcome in Bib Master!" << endl;
 
@@ -32,7 +33,17 @@ int main ()
   cout << "Lecture de la base de données..." << endl;
   BibFile myBib(currentConfig.getBibpath());
   myBib.readBib(currentConfig.getBibpath());
-  myBib.listItems();
+
+  cout << "What do you want to do ?\n"
+    << "1: Display items" << endl;
+  cin >> choice;
+
+  if (choice == "d")
+  {
+    cout << "Which type of item ? [ALL, article, book, misc]" << endl;
+    cin >> choice;
+    myBib.listItems(choice);
+  }
 
 
   return 0;
