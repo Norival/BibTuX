@@ -124,7 +124,9 @@ void BibFile::readBib(const string &bibpath)
 
 const void BibFile::getKeys(vector<string> &keys)
 {
-  for(map<string, BibItem*>::iterator it = listOfItems.begin(); it != listOfItems.end(); ++it)
+  for(map<string, BibItem*>::iterator it = listOfItems.begin();
+      it != listOfItems.end();
+      ++it)
   { 
     keys.push_back(it->first);
     //cout << it->first << "\n";
