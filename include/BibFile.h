@@ -14,12 +14,13 @@ class BibFile
   public:
     BibFile(std::string bibpath);
     void readBib(const std::string &bibpath);
-    const void getKeys(std::vector<std::string> &keys);
+    const void listItems(std::string type = "all");
 
   protected:
     std::string m_bibPath;
     std::map<std::string, BibItem*> listOfItems;
-
+    std::vector<std::string> listOfKeys;
+    std::map<std::string, BibItem*>::iterator itemsIterator;
 
 };
 

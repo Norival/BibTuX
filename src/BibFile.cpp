@@ -18,8 +18,6 @@ void BibFile::readBib(const string &bibpath)
   {
     //Création de variables temporaires pour stocker les données
     string line;
-    //vector<string> items(0);
-    //string itemTmp;
     string typeTmp= "";
 
     string keyTmp = "";
@@ -35,8 +33,6 @@ void BibFile::readBib(const string &bibpath)
     while (getline(bibfile, line))
     {
       //Boucle générale, lecture du fichier
-      //if (line.rfind('@') == line.npos) //Pas de @
-      //continue;
       if (line.rfind('@') != line.npos) //Présence d'un @
       {
         keyTmp = line.substr(
@@ -117,18 +113,36 @@ void BibFile::readBib(const string &bibpath)
             numberTmp);
       }
     }
+    for(itemsIterator = listOfItems.begin();
+        itemsIterator != listOfItems.end();
+        ++itemsIterator)
+    { 
+      listOfKeys.push_back(itemsIterator->first);
+      //cout << it->first << "\n";
+    }
   }
   else
     cout << "Unable to read Bibtex file..." << endl;
 }
 
-const void BibFile::getKeys(vector<string> &keys)
+const void BibFile::listItems(string type)
 {
-  for(map<string, BibItem*>::iterator it = listOfItems.begin();
-      it != listOfItems.end();
-      ++it)
-  { 
-    keys.push_back(it->first);
-    //cout << it->first << "\n";
+  if (type == "all")
+  {
+    int i = 1;
+    cout << "Articles:" << endl;
+    for(itemsIterator = listOfItems.begin();
+        itemsIterator != listOfItems.end();
+        ++itemsIterator)
+    {
+      if (itemsIterator->second->getType() == "article")
+      {
+        cout << i << itemsIterator->first << ": " 
+          << itemsIterator->second->getTitle() << endl;
+        i++;
+      }
+    }
+    cout << endl << "Books:" << endl;
+    //Continuer pour les autres types
   }
 }
