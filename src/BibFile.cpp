@@ -35,12 +35,13 @@ void BibFile::readBib(const string &bibpath)
       //Boucle générale, lecture du fichier
       if (line.rfind('@') != line.npos) //Présence d'un @
       {
+        typeTmp = line.substr(
+            line.find('@') + 1,
+            line.find_first_of('{') - 1);
         keyTmp = line.substr(
             line.find_first_of('{') + 1,
             line.find_last_of(',') - line.find_first_of('{') - 1);
       }
-      if (line.rfind("Article") != line.npos) //C'est un article
-        typeTmp = "article";
 
       //Lecture des composantes et sockage dans les strings Tmp
       if (line.rfind("author") != line.npos)
@@ -129,15 +130,16 @@ const void BibFile::listItems(string type)
 {
   if (type == "all")
   {
+    cout << "\n List of all items in Bibfile: \n\n";
     int i = 1;
     cout << "Articles:" << endl;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
-      if (itemsIterator->second->getType() == "article")
+      if (itemsIterator->second->getType() == "Article")
       {
-        cout << i << itemsIterator->first << ": " 
+        cout << i << " " << itemsIterator->first << ": " 
           << itemsIterator->second->getTitle() << endl;
         i++;
       }
