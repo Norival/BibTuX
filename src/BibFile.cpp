@@ -128,11 +128,15 @@ void BibFile::readBib(const string &bibpath)
 
 const void BibFile::listItems(string type)
 {
+  int i = 1;
+
   if (type == "all")
   {
     cout << "\n List of all items in Bibfile: \n\n";
-    int i = 1;
-    cout << "Articles:" << endl;
+  }
+  if (type == "all" || type == "article")
+  {
+    cout << endl << "Articles:" << endl;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
@@ -144,6 +148,9 @@ const void BibFile::listItems(string type)
         i++;
       }
     }
+  }
+  if (type == "all" || type == "book")
+  {
     cout << endl << "Books:" << endl;
     //Continuer pour les autres types
     for(itemsIterator = listOfItems.begin();
@@ -157,8 +164,10 @@ const void BibFile::listItems(string type)
         i++;
       }
     }
+  }
+  if (type == "all" || type == "misc")
+  {
     cout << endl << "Miscellaneaous:" << endl;
-    //Continuer pour les autres types
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
