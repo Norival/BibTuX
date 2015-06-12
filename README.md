@@ -1,4 +1,4 @@
-# Programme Bib Master
+# BibTux
 
 BibTuX is a program to manage BibTex databases in a simple command line
 interface.
