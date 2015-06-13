@@ -16,6 +16,8 @@
 
 using namespace std;
 
+string Config::$HOME = getenv("HOME");
+
 void Config::removeCharacter(string &Str, char C)
 {
   Str.erase( 
@@ -31,10 +33,10 @@ bool Config::fromString(const string &Str, int &Dest)
   return iss >> Dest != 0; 
 }
 
-Config::Config():
-  m_configPath("/home/xavier/.bibmasterrc"),
-  m_bibPath()
+Config::Config()
 {
+  m_configPath = $HOME + "/.bibtuxrc";
+  m_bibPath = "";
   //Constructor
 }
 
