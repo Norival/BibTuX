@@ -25,6 +25,7 @@
 #include<string>
 #include<stdio.h>
 #include<map>
+#include <ncurses.h>
 
 #include<BibItem.h>
 #include<BibFile.h>
@@ -35,8 +36,16 @@ using namespace std;
 int main ()
 {
   string choice;
+  initscr();
+  int row, col;
+  getmaxyx(stdscr, row, col);
+  string mesg;
+  mesg = "Hello! Welcome in BibTuX!";
+  mvprintw(row/2, (col-mesg.size())/2, "Hello world!");
+  refresh();
   
-  cout << "Hello! Welcome in Bib Master!" << endl;
+  //cout << "Hello! Welcome in Bib Master!" << endl;
+
 
   Config currentConfig;
   currentConfig.loadConfig();
