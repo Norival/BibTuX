@@ -16,7 +16,7 @@
 #define CONFIG_H
 
 #include<iostream>
-#include<stdlib.h>
+#include<cstdlib>
 #include<fstream>
 #include<string>
 #include<vector>
