@@ -142,6 +142,15 @@ void BibFile::readBib(const string &bibpath)
 
 const void BibFile::listItems(string type)
 {
+  /* Creating window */
+  displayWin = createWindow(
+      LINES / 2,
+      COLS,
+      LINES / 2,
+      0,
+      1
+      );
+
   int i = 1;
 
   if (type == "all")
@@ -194,4 +203,5 @@ const void BibFile::listItems(string type)
       }
     }
   }
+  destroyWindow(displayWin);
 }

@@ -12,36 +12,26 @@
  * BibTuX.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BIBFILE_H
-#define BIBFILE_H
 
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<vector>
-#include<map>
+/* Functions to control display with ncurses */
 
-extern "C" {
-#include <ncurses.h>
+#include "displayFunctions.hpp" 
+
+WINDOW *createWindow(int height, int width, int starty, int startx, int type)
+{
+  WINDOW *localWindow;
+
+  localWindow = newwin(height, width, starty, startx);
+  box(localWindow, 0 , 0);
+
+  wrefresh(localWindow);
+
+  return localWindow;
 }
 
-#include<BibItem.h>
-#include<displayFunctions.hpp>
-
-class BibFile
+void destroyWindow(WINDOW *localWindow)
 {
-  public:
-    BibFile(std::string bibpath);
-    void readBib(const std::string &bibpath);
-    const void listItems(std::string type = "all");
-
-  protected:
-    std::string m_bibPath;
-    std::map<std::string, BibItem*> listOfItems;
-    std::vector<std::string> listOfKeys;
-    std::map<std::string, BibItem*>::iterator itemsIterator;
-    WINDOW *displayWin;
-
-};
-
-#endif
+	wborder(localWindow, ' ', ' ', ' ',' ',' ',' ',' ',' ');
+	wrefresh(localWindow);
+	delwin(localWindow);
+}

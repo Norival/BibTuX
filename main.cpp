@@ -30,15 +30,21 @@
 #include<BibItem.h>
 #include<BibFile.h>
 #include<Config.h>
+#include<displayFunctions.hpp>
 
 using namespace std;
 
 int main ()
 {
-  string choice;
+  /* ncurses initialization */
   initscr();
+  raw();
+  keypad(stdscr, TRUE);
+  noecho();
   int row, col;
   getmaxyx(stdscr, row, col);
+
+  string choice;
   string mesg;
   mesg = "Hello! Welcome in BibTuX!";
   mvprintw(row/2, (col-mesg.size())/2, "Hello world!");
@@ -64,6 +70,8 @@ int main ()
     cin >> choice;
     myBib.listItems(choice);
   }
+
+  endwin();
 
 
   return 0;
