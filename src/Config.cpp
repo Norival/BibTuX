@@ -16,6 +16,8 @@
 
 using namespace std;
 
+string Config::$HOME = getenv("HOME");
+
 void Config::removeCharacter(string &Str, char C)
 {
   Str.erase( 
@@ -31,10 +33,10 @@ bool Config::fromString(const string &Str, int &Dest)
   return iss >> Dest != 0; 
 }
 
-Config::Config():
-  m_configPath("/home/xavier/.bibmasterrc"),
-  m_bibPath()
+Config::Config()
 {
+  m_configPath = $HOME + "/.bibtuxrc";
+  m_bibPath = "";
   //Constructor
 }
 
@@ -57,11 +59,10 @@ void Config::initConfig(const string &file, const string &path)
   {
     initConfigFile 
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-      << "%        BibMaster configuration file          %" << endl
+      << "%           BibTuX configuration file          %" << endl
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-      << "% Created on date" << endl
       << "\n"
-      << "@BibPath:" << path << endl;
+      << "@BibPath = " << path << endl;
   }
   else
   {
@@ -90,28 +91,20 @@ void Config::loadConfig()
   ifstream load(m_configPath.c_str());
 
   /* Reading file and initializing var */
-  int nline = 1;
   while (getline(load, line))
   {
-    if (line[0] == '%' || line[0] == ' ')
-    {
+    if (line.find('%') != line.npos)
       continue;
-      nline++;
-    }
-    else if (line[0] == '@')
+    else if (line.find('@') != line.npos)
     {
-      if (line.substr(1, 7) == "BibPath")
-        m_bibPath = line.substr(9);
-    }
-    else if (line.size() < 1)
-    {
-      continue;
-      nline++;
-    }
-    else
-    {
-      cout << "Bad configuration file..." << endl;
-      cout << "Error in line " << nline << endl;
+      if (line.find("BibPath") != line.npos)
+      {
+        m_bibPath = line.substr(
+            line.find('=') + line.find_first_not_of(' ', line.find('=') + 1) -
+            line.find('='),
+            line.find_last_not_of(' ')
+            );
+      }
     }
   }
 }

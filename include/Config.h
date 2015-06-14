@@ -16,6 +16,7 @@
 #define CONFIG_H
 
 #include<iostream>
+#include<cstdlib>
 #include<fstream>
 #include<string>
 #include<vector>
@@ -35,6 +36,7 @@ class Config
 
     static void removeCharacter(std::string &Str, char C);
     static bool fromString(const std::string &Str, int &Dest); 
+    static std::string $HOME;
 
 
   protected:
