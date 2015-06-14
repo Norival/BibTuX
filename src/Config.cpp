@@ -59,7 +59,7 @@ void Config::initConfig(const string &file, const string &path)
   {
     initConfigFile 
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-      << "%        BibMaster configuration file          %" << endl
+      << "%           BibTuX configuration file          %" << endl
       << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
       << "\n"
       << "@BibPath = " << path << endl;
