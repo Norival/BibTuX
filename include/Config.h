@@ -36,7 +36,7 @@ class Config
 
     static void removeCharacter(std::string &Str, char C);
     static bool fromString(const std::string &Str, int &Dest); 
-    static std::string $HOME;
+    static std::string HOME;
 
 
   protected:

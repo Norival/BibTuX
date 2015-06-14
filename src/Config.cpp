@@ -16,7 +16,7 @@
 
 using namespace std;
 
-string Config::$HOME = getenv("HOME");
+string Config::HOME = getenv("HOME");
 
 void Config::removeCharacter(string &Str, char C)
 {
@@ -35,7 +35,7 @@ bool Config::fromString(const string &Str, int &Dest)
 
 Config::Config()
 {
-  m_configPath = $HOME + "/.bibtuxrc";
+  m_configPath = HOME + "/.bibtuxrc";
   m_bibPath = "";
   //Constructor
 }
