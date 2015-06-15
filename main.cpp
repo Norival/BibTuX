@@ -40,16 +40,13 @@ int main ()
   initscr();
   raw();
   keypad(stdscr, TRUE);
+  noecho();
   int row, col;
   getmaxyx(stdscr, row, col);
 
   int ch;
   int nline = 1;
 
-  string choice;
-  string mesg;
-  mesg = "Hello! Welcome in BibTuX!";
-  
   printw("Hello! Welcome in Bib Master!");
 
   Config currentConfig;

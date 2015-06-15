@@ -209,4 +209,12 @@ const void BibFile::listItems(string type)
     }
   }
   wrefresh(displayWin);
+  while (1)
+  {
+    int ch = wgetch(displayWin);
+    if (ch == 'j' || ch == 'k' || ch == 'l' || ch == 'h')
+      moveCursor(displayWin, ch);
+    if (ch == 'q')
+      break;
+  }
 }

@@ -24,5 +24,6 @@ extern "C" {
 
 WINDOW *createWindow(int height, int width, int starty, int startx, int type);
 void destroyWindow(WINDOW *localWindow);
+void moveCursor(WINDOW *localWindow, int &direction);
 
 #endif

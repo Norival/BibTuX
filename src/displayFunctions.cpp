@@ -22,6 +22,7 @@ WINDOW *createWindow(int height, int width, int starty, int startx, int type)
   WINDOW *localWindow;
 
   localWindow = newwin(height, width, starty, startx);
+  noecho();
   box(localWindow, 0 , 0);
   wborder(localWindow, ' ', ' ', '-', ' ', ' ', ' ', ' ', ' ');
 
@@ -35,4 +36,28 @@ void destroyWindow(WINDOW *localWindow)
 	wborder(localWindow, ' ', ' ', ' ',' ',' ',' ',' ',' ');
 	wrefresh(localWindow);
 	delwin(localWindow);
+}
+
+void moveCursor(WINDOW *localWindow, int &direction)
+{
+  int y, x;
+  getyx(localWindow, y, x);
+
+  switch (direction)
+  {
+    case 'j':
+      y++;
+      break;
+    case 'k':
+      y--;
+      break;
+    case 'h':
+      x--;
+      break;
+    case 'l':
+      x++;
+      break;
+  }
+  wmove(localWindow, y, x);
+  wrefresh(localWindow);
 }
