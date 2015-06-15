@@ -40,39 +40,43 @@ int main ()
   initscr();
   raw();
   keypad(stdscr, TRUE);
-  noecho();
   int row, col;
   getmaxyx(stdscr, row, col);
+
+  int ch;
+  int nline = 1;
 
   string choice;
   string mesg;
   mesg = "Hello! Welcome in BibTuX!";
-  mvprintw(row/2, (col-mesg.size())/2, "Hello world!");
-  refresh();
   
-  //cout << "Hello! Welcome in Bib Master!" << endl;
-
+  printw("Hello! Welcome in Bib Master!");
 
   Config currentConfig;
   currentConfig.loadConfig();
 
-  cout << "Lecture de la base de données..." << endl;
+  mvprintw(nline, 1, "Reading database");
+  nline++;
   BibFile myBib(currentConfig.getBibpath());
   myBib.readBib(currentConfig.getBibpath());
 
-  cout << "What do you want to do ?\n"
-    << "1: Display items" << endl;
-  cin >> choice;
+  mvprintw(nline, 1, "Press d for displaying items");
+  nline++;
+  refresh();
 
-  if (choice == "d")
+  ch = getch();
+  if (ch == 'd')
   {
-    cout << "Which type of item ? [ALL, article, book, misc]" << endl;
-    cin >> choice;
-    myBib.listItems(choice);
+    mvprintw(nline, 1, "Which type of item ? [ALL, article, book, misc]");
+    nline++;
+    ch = getch();
+    if (ch == 'a')
+    {
+      myBib.listItems();
+    }
   }
 
+  getch();
   endwin();
-
-
   return 0;
 }

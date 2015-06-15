@@ -155,53 +155,58 @@ const void BibFile::listItems(string type)
 
   if (type == "all")
   {
-    cout << "\n List of all items in Bibfile: \n\n";
+    mvwprintw(displayWin, i, 1, "List of all items in database:");
+    i++;
   }
   if (type == "all" || type == "article")
   {
-    cout << endl << "Articles:" << endl;
+    mvwprintw(displayWin, i, 1, "Articles");
+    i++;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
       if (itemsIterator->second->getType() == "Article")
       {
-        cout << i << " " << itemsIterator->first << ": " 
-          << itemsIterator->second->getTitle() << endl;
+        mvwprintw(displayWin, i, 1, "%s : %s \n", itemsIterator->first.c_str(),
+            itemsIterator->second->getTitle().c_str());
         i++;
       }
     }
   }
+  i++;
   if (type == "all" || type == "book")
   {
-    cout << endl << "Books:" << endl;
-    //Continuer pour les autres types
+    mvwprintw(displayWin, i, 1, "Books");
+    i++;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
       if (itemsIterator->second->getType() == "Book")
       {
-        cout << i << " " << itemsIterator->first << ": " 
-          << itemsIterator->second->getTitle() << endl;
+        mvwprintw(displayWin, i, 1, "%s : %s \n", itemsIterator->first.c_str(),
+            itemsIterator->second->getTitle().c_str());
         i++;
       }
     }
   }
+  i++;
   if (type == "all" || type == "misc")
   {
-    cout << endl << "Miscellaneaous:" << endl;
+    mvwprintw(displayWin, i, 1, "Miscellaneous");
+    i++;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
       if (itemsIterator->second->getType() == "Misc")
       {
-        cout << i << " " << itemsIterator->first << ": " 
-          << itemsIterator->second->getTitle() << endl;
+        mvwprintw(displayWin, i, 1, "%s : %s \n", itemsIterator->first.c_str(),
+            itemsIterator->second->getTitle().c_str());
         i++;
       }
     }
   }
-  destroyWindow(displayWin);
+  wrefresh(displayWin);
 }

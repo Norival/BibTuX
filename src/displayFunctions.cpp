@@ -23,6 +23,7 @@ WINDOW *createWindow(int height, int width, int starty, int startx, int type)
 
   localWindow = newwin(height, width, starty, startx);
   box(localWindow, 0 , 0);
+  wborder(localWindow, ' ', ' ', '-', ' ', ' ', ' ', ' ', ' ');
 
   wrefresh(localWindow);
 
