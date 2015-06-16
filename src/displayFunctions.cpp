@@ -24,7 +24,17 @@ WINDOW *createWindow(int height, int width, int starty, int startx, int type)
   localWindow = newwin(height, width, starty, startx);
   noecho();
   box(localWindow, 0 , 0);
-  wborder(localWindow, ' ', ' ', '-', ' ', ' ', ' ', ' ', ' ');
+  switch (type)
+  {
+    case 1:
+      wborder(localWindow, ' ', ' ', '-', ' ', ' ', ' ', ' ', ' ');
+      break;
+    case 2:
+      wborder(localWindow, '|', '|', '-', '-', '+', '+', '+', '+');
+      break;
+    default:
+      break;
+  }
 
   wrefresh(localWindow);
 
