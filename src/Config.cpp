@@ -51,22 +51,54 @@ bool Config::isReadable(const string &file)
   return !fichier.fail();
 }
 
-void Config::initConfig(const string &file, const string &path)
+void Config::initConfig(string file, const string &path)
 {
-  ofstream initConfigFile(file.c_str());
-
-  if (initConfigFile)
+  while (1)
   {
-    initConfigFile 
-      << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-      << "%           BibTuX configuration file          %" << endl
-      << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
-      << "\n"
-      << "@BibPath = " << path << endl;
-  }
-  else
-  {
-    cout << "Error: unable to write file..." << endl;
+    ofstream initConfigFile(file.c_str());
+    if (initConfigFile)
+    {
+      initConfigFile 
+        << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
+        << "%           BibTuX configuration file          %" << endl
+        << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl
+        << "\n"
+        << "@BibPath = " << path << endl;
+      break;
+    }
+    else
+    {
+      string msg = "Error: unable to write file...";
+      errorWin = createWindow(
+          6,
+          msg.size() + 4,
+          LINES/2 - 3,
+          COLS/2 - msg.size()/2,
+          2
+          );
+      int y, x, cury, curx;
+      getmaxyx(errorWin, y, x);
+      mvwprintw(errorWin,
+          1, 
+          x/2 - msg.size()/2,
+          "%s",
+          msg.c_str()
+          );
+      /* Finir le message d'erreur */
+      mvwprintw(errorWin,
+          2,
+          1,
+          "Enter file path:"
+          );
+      char str[80];
+      echo();
+      getyx(errorWin, cury, curx);
+      wmove(errorWin, cury+1, 1);
+      wgetstr(errorWin, str);
+      file = str;
+      wrefresh(errorWin);
+      endwin();
+    }
   }
 }
 

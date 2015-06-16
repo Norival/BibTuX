@@ -24,6 +24,7 @@
 #include<sstream>
 #include<ncurses.h>
 
+#include<displayFunctions.hpp>
 
 class Config
 {
@@ -31,7 +32,7 @@ class Config
   public:
     Config();
     bool isReadable(const std::string &file);
-    void initConfig(const std::string &file, const std::string &path);
+    void initConfig(std::string file, const std::string &path);
     void loadConfig();
     const std::string getBibpath();
 
@@ -43,6 +44,7 @@ class Config
   protected:
     std::string m_configPath;
     std::string m_bibPath;
+    WINDOW *errorWin;
     
 };
 
