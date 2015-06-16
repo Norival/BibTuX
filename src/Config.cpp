@@ -105,7 +105,6 @@ void Config::initConfig(string file, const string &path)
 void Config::loadConfig()
 {
   string line;
-
   if (!Config::isReadable(m_configPath.c_str()))
   {
     //Verifying presence of configuration file
@@ -118,28 +117,39 @@ void Config::loadConfig()
         LINES/2 - 3,
         COLS/2 - msg.size()/2,
         2
-        );
+        ); 
     int y, x, cury, curx;
     getmaxyx(msgWin, y, x);
-    mvwprintw(msgWin,
-        1,
-        x/2 - msg.size()/2,
-        msg.c_str(),
-        " %s",
-        m_bibPath.c_str()
-        );
-    mvwprintw(msgWin,
-        2,
-        1,
-        "Where is the .bib database?"
-        );
-    echo();
-    getyx(msgWin, cury, curx);
-    wmove(msgWin, cury+1, 1);
-    wgetstr(msgWin, str);
-    bib = str;
+    while (!Config::isReadable(m_bibPath))
+    {
+      mvwprintw(msgWin,
+          1,
+          x/2 - msg.size()/2,
+          msg.c_str()
+          );
+      mvwprintw(msgWin,
+          2,
+          x/2 - m_configPath.size()/2,
+          m_configPath.c_str()
+          );
+      mvwprintw(msgWin,
+          3,
+          1,
+          "Where is the .bib database?"
+          );
+      echo();
+      getyx(msgWin, cury, curx);
+      wmove(msgWin, cury+1, 1);
+      wgetstr(msgWin, str);
+      m_bibPath = str;
+      getyx(msgWin, cury, curx);
+      wmove(msgWin, cury-1, 1);
+      wclrtoeol(msgWin);
+      wborder(msgWin, '|', '|', '-', '-', '+', '+', '+', '+');
+      wrefresh(msgWin);
 
-    Config::initConfig(m_configPath, bib);
+      Config::initConfig(m_configPath, m_bibPath);
+    }
   }
   else
     mvprintw(1, 1, "Config file loaded");
