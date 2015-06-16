@@ -62,16 +62,42 @@ int main ()
   nline++;
   refresh();
 
-  ch = getch();
-  if (ch == 'd')
+  while(1)
   {
-    mvprintw(nline, 1, "Which type of item ? [ALL, article, book, misc]");
-    nline++;
     ch = getch();
-    if (ch == 'a')
+    switch (ch)
     {
-      myBib.listItems();
+      case 'd':
+        mvprintw(nline,
+            1,
+            "Which type of item ? [all(a), article(r), book(b), misc(m)]"
+            );
+        nline++;
+        while (1)
+        {
+          ch = getch();
+          switch (ch)
+          {
+            case 'a':
+              myBib.listItems();
+              break;
+            case 'r':
+              myBib.listItems("article");
+              break;
+            case 'b':
+              myBib.listItems("book");
+              break;
+            case 'm':
+              myBib.listItems("misc");
+              break;
+          }
+          if (ch == 'q')
+            break;
+        }
+        break;
     }
+    if (ch == 'q')
+      break;
   }
 
   getch();
