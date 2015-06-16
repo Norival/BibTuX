@@ -51,6 +51,7 @@ int main ()
 
   Config currentConfig;
   currentConfig.loadConfig();
+  nline++;
 
   mvprintw(nline, 1, "Reading database");
   nline++;
