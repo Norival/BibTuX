@@ -25,37 +25,56 @@
 #include<string>
 #include<stdio.h>
 #include<map>
+#include <ncurses.h>
 
 #include<BibItem.h>
 #include<BibFile.h>
 #include<Config.h>
+#include<displayFunctions.hpp>
 
 using namespace std;
 
 int main ()
 {
-  string choice;
-  
-  cout << "Hello! Welcome in Bib Master!" << endl;
+  /* ncurses initialization */
+  initscr();
+  raw();
+  keypad(stdscr, TRUE);
+  noecho();
+  int row, col;
+  getmaxyx(stdscr, row, col);
+
+  int ch;
+  int nline = 1;
+
+  printw("Hello! Welcome in Bib Master!");
 
   Config currentConfig;
   currentConfig.loadConfig();
+  nline++;
 
-  cout << "Lecture de la base de données..." << endl;
+  mvprintw(nline, 1, "Reading database");
+  nline++;
   BibFile myBib(currentConfig.getBibpath());
   myBib.readBib(currentConfig.getBibpath());
 
-  cout << "What do you want to do ?\n"
-    << "1: Display items" << endl;
-  cin >> choice;
+  mvprintw(nline, 1, "Press d for displaying items");
+  nline++;
+  refresh();
 
-  if (choice == "d")
+  ch = getch();
+  if (ch == 'd')
   {
-    cout << "Which type of item ? [ALL, article, book, misc]" << endl;
-    cin >> choice;
-    myBib.listItems(choice);
+    mvprintw(nline, 1, "Which type of item ? [ALL, article, book, misc]");
+    nline++;
+    ch = getch();
+    if (ch == 'a')
+    {
+      myBib.listItems();
+    }
   }
 
-
+  getch();
+  endwin();
   return 0;
 }

@@ -22,6 +22,7 @@
 #include<vector>
 #include<algorithm>
 #include<sstream>
+#include<ncurses.h>
 
 
 class Config
