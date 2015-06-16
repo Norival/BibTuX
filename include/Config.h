@@ -45,6 +45,7 @@ class Config
     std::string m_configPath;
     std::string m_bibPath;
     WINDOW *errorWin;
+    WINDOW *msgWin;
     
 };
 

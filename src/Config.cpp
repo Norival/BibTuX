@@ -110,10 +110,34 @@ void Config::loadConfig()
   {
     //Verifying presence of configuration file
     string bib;
-    cout << "No configuration file found. Writing new one in "
-      << m_configPath << endl;
-    cout << "Where is the .bib database?" << endl;
-    cin >> bib;
+    char str[80];
+    string msg = "No configuration file found. Writing new one in";
+    msgWin = createWindow(
+        6,
+        msg.size() + 4,
+        LINES/2 - 3,
+        COLS/2 - msg.size()/2,
+        2
+        );
+    int y, x, cury, curx;
+    getmaxyx(msgWin, y, x);
+    mvwprintw(msgWin,
+        1,
+        x/2 - msg.size()/2,
+        msg.c_str(),
+        " %s",
+        m_bibPath.c_str()
+        );
+    mvwprintw(msgWin,
+        2,
+        1,
+        "Where is the .bib database?"
+        );
+    echo();
+    getyx(msgWin, cury, curx);
+    wmove(msgWin, cury+1, 1);
+    wgetstr(msgWin, str);
+    bib = str;
 
     Config::initConfig(m_configPath, bib);
   }
