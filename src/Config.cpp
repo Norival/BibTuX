@@ -33,6 +33,12 @@ bool Config::fromString(const string &Str, int &Dest)
   return iss >> Dest != 0; 
 }
 
+ifstream::pos_type Config::fileSize(const char* filename)
+{
+  std::ifstream in(filename, std::ifstream::ate | std::ifstream::binary);
+  return in.tellg(); 
+}
+
 Config::Config()
 {
   m_configPath = HOME + "/.bibtuxrc";

@@ -39,6 +39,7 @@ class Config
     static void removeCharacter(std::string &Str, char C);
     static bool fromString(const std::string &Str, int &Dest); 
     static std::string HOME;
+    static std::ifstream::pos_type fileSize(const char* filename);
 
 
   protected:

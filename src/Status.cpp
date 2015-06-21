@@ -24,7 +24,7 @@ Status::Status()
       COLS,
       0,
       0,
-      0
+      2
       );
 }
 
@@ -36,7 +36,8 @@ void Status::refreshStatus(Config &config, BibFile &bibfile)
   mvwprintw(statusWin, 1, 1, "BibTuX v%g", 0.1);
   mvwprintw(statusWin, 3, 1, "BibTeX database: %s",
      config.getBibpath().c_str()); 
-  mvwprintw(statusWin, 4, 1, "File size: %i ko", 2);
+  mvwprintw(statusWin, 4, 1, "File size: %i bytes",
+      Config::fileSize(config.getBibpath().c_str()));
 
   wmove(statusWin, 1, x/2);
   wvline(statusWin, ACS_VLINE, 4);
