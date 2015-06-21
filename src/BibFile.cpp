@@ -148,71 +148,141 @@ const void BibFile::listItems(string type)
 {
   /* Creating window */
   displayWin = createWindow(
-      LINES / 2,
+      LINES - 6,
       COLS,
-      LINES / 2,
+      6, 
       0,
-      1
+      3
       );
 
-  int i = 1;
+  wattron(displayWin, A_BOLD);
+  mvwprintw(displayWin, 1, 0, "Type");
+  mvwprintw(displayWin, 1, 9, "Key");
+  mvwprintw(displayWin, 1, 25, "Title");
+  wrefresh(displayWin);
+  wattroff(displayWin, A_BOLD);
 
-  if (type == "all")
-  {
-    mvwprintw(displayWin, i, 1, "List of all items in database:");
-    i++;
-  }
+  int i = 2;
+  string msg;
+
   if (type == "all" || type == "article")
   {
-    mvwprintw(displayWin, i, 1, "Articles");
-    i++;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
       if (itemsIterator->second->getType() == "Article")
       {
-        mvwprintw(displayWin, i, 1, "%s : %s \n", itemsIterator->first.c_str(),
-            itemsIterator->second->getTitle().c_str());
+        mvwprintw(displayWin, i, 0, "Article");
+        mvwprintw(displayWin, i, 9,
+            "%s", itemsIterator->first.c_str());
+        if (itemsIterator->second->getTitle().size() > COLS-25)
+        {
+          msg = itemsIterator->second->getTitle().substr(
+              0, COLS - 25 - 5) + "...";
+        }
+        else
+          msg = itemsIterator->second->getTitle();
+
+        mvwprintw(displayWin, i, 25,
+            "%s", 
+            msg.c_str()
+            );
         i++;
       }
     }
   }
-  i++;
   if (type == "all" || type == "book")
   {
-    mvwprintw(displayWin, i, 1, "Books");
-    i++;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
       if (itemsIterator->second->getType() == "Book")
       {
-        mvwprintw(displayWin, i, 1, "%s : %s \n", itemsIterator->first.c_str(),
-            itemsIterator->second->getTitle().c_str());
+        mvwprintw(displayWin, i, 0, "Book");
+        mvwprintw(displayWin, i, 9,
+            "%s", itemsIterator->first.c_str());
+        if (itemsIterator->second->getTitle().size() > COLS-25)
+        {
+          msg = itemsIterator->second->getTitle().substr(
+              0, COLS - 25 - 5) + "...";
+        }
+        else
+          msg = itemsIterator->second->getTitle();
+
+        mvwprintw(displayWin, i, 25,
+            "%s", 
+            msg.c_str()
+            );
         i++;
       }
     }
   }
-  i++;
   if (type == "all" || type == "misc")
   {
-    mvwprintw(displayWin, i, 1, "Miscellaneous");
-    i++;
     for(itemsIterator = listOfItems.begin();
         itemsIterator != listOfItems.end();
         ++itemsIterator)
     {
       if (itemsIterator->second->getType() == "Misc")
       {
-        mvwprintw(displayWin, i, 1, "%s : %s \n", itemsIterator->first.c_str(),
-            itemsIterator->second->getTitle().c_str());
+        mvwprintw(displayWin, i, 0, "Misc");
+        mvwprintw(displayWin, i, 9,
+            "%s", itemsIterator->first.c_str());
+        if (itemsIterator->second->getTitle().size() > COLS-25)
+        {
+          msg = itemsIterator->second->getTitle().substr(
+              0, COLS - 25 - 5) + "...";
+        }
+        else
+          msg = itemsIterator->second->getTitle();
+
+        mvwprintw(displayWin, i, 25,
+            "%s", 
+            msg.c_str()
+            );
         i++;
       }
     }
   }
-  wrefresh(displayWin);
+  //i++;
+  //if (type == "all" || type == "book")
+  //{
+    //mvwprintw(displayWin, i, 1, "Books");
+    //i++;
+    //for(itemsIterator = listOfItems.begin();
+        //itemsIterator != listOfItems.end();
+        //++itemsIterator)
+    //{
+      //if (itemsIterator->second->getType() == "Book")
+      //{
+        //mvwprintw(displayWin, i, 1, "%s : %s \n",
+            //itemsIterator->first.c_str(),
+            //itemsIterator->second->getTitle().c_str());
+        //i++;
+      //}
+    //}
+  //}
+  //i++;
+  //if (type == "all" || type == "misc")
+  //{
+    //mvwprintw(displayWin, i, 1, "Miscellaneous");
+    //i++;
+    //for(itemsIterator = listOfItems.begin();
+        //itemsIterator != listOfItems.end();
+        //++itemsIterator)
+    //{
+      //if (itemsIterator->second->getType() == "Misc")
+      //{
+        //mvwprintw(displayWin, i, 1, "%s : %s \n",
+            //itemsIterator->first.c_str(),
+            //itemsIterator->second->getTitle().c_str());
+        //i++;
+      //}
+    //}
+  //}
+  //wrefresh(displayWin);
   while (1)
   {
     int ch = wgetch(displayWin);
@@ -249,7 +319,11 @@ int BibFile::countItems(const string &type)
       nMisc++;
     }
   }
-  nItems = listOfItems.size();
+  if (type == "all")
+  {
+    nItems = listOfItems.size();
+    return nItems;
+  }
 
   if (type == "article")
     return nArticles;
@@ -257,7 +331,5 @@ int BibFile::countItems(const string &type)
     return nBooks;
   if (type == "misc")
     return nMisc;
-  if (type == "all")
-    return nItems;
 
 }

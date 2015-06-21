@@ -33,6 +33,8 @@
 #include<displayFunctions.hpp>
 #include<Status.hpp>
 
+#define VERSION 0.1
+
 using namespace std;
 
 int main ()
@@ -45,65 +47,70 @@ int main ()
   int row, col;
   getmaxyx(stdscr, row, col);
 
+  WINDOW *commandWin;
+  commandWin = createWindow(
+      3,
+      COLS,
+      LINES - 4,
+      0,
+      2);
+
   int ch;
   int nline = 1;
 
-  //printw("Hello! Welcome in Bib Master!");
-
   Config currentConfig;
   currentConfig.loadConfig();
-  nline++;
 
-  //mvprintw(nline, 1, "Reading database");
-  nline++;
   BibFile myBib(currentConfig.getBibpath());
   myBib.readBib(currentConfig.getBibpath());
 
-  //mvprintw(nline, 1, "Press d for displaying items");
-  nline++;
-  refresh();
   Status status;
-  status.refreshStatus(currentConfig, myBib);
+  status.refreshStatus(currentConfig, myBib, VERSION);
 
   while(1)
   {
-    ch = getch();
-    switch (ch)
+    mvwprintw(commandWin, 1, 1, "Press 'd' to display items, 'q' to quit");
+    wclrtoeol(commandWin);
+    wborder(commandWin, '|', '|', '-', '-', '+', '+', '+', '+');
+    ch = wgetch(commandWin);
+    if (ch == 'd')
     {
-      case 'd':
-        mvprintw(nline,
+      while (1)
+      {
+        wclrtoeol(commandWin);
+        mvwprintw(commandWin, 1,
             1,
             "Which type of item ? [all(a), article(r), book(b), misc(m)]"
             );
-        nline++;
-        while (1)
+        wclrtoeol(commandWin);
+        wborder(commandWin, '|', '|', '-', '-', '+', '+', '+', '+');
+        refresh();
+        status.refreshStatus(currentConfig, myBib, VERSION);
+        wrefresh(commandWin);
+        ch = getch();
+        switch (ch)
         {
-          ch = getch();
-          switch (ch)
-          {
-            case 'a':
-              myBib.listItems();
-              break;
-            case 'r':
-              myBib.listItems("article");
-              break;
-            case 'b':
-              myBib.listItems("book");
-              break;
-            case 'm':
-              myBib.listItems("misc");
-              break;
-          }
-          if (ch == 'q')
+          case 'a':
+            myBib.listItems();
+            break;
+          case 'r':
+            myBib.listItems("article");
+            break;
+          case 'b':
+            myBib.listItems("book");
+            break;
+          case 'm':
+            myBib.listItems("misc");
             break;
         }
         break;
+      }
     }
     if (ch == 'q')
       break;
   }
 
-  getch();
+  //getch();
   endwin();
   return 0;
 }

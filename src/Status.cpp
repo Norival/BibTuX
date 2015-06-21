@@ -28,14 +28,15 @@ Status::Status()
       );
 }
 
-void Status::refreshStatus(Config &config, BibFile &bibfile)
+void Status::refreshStatus(Config &config, BibFile &bibfile,
+    const float version)
 {
   int y, x;
   getmaxyx(statusWin, y, x);
 
-  mvwprintw(statusWin, 1, 1, "BibTuX v%g", 0.1);
+  mvwprintw(statusWin, 1, 1, "BibTuX v%g", version);
   mvwprintw(statusWin, 3, 1, "BibTeX database: %s",
-     config.getBibpath().c_str()); 
+      config.getBibpath().c_str()); 
   mvwprintw(statusWin, 4, 1, "File size: %i bytes",
       Config::fileSize(config.getBibpath().c_str()));
 
@@ -52,5 +53,6 @@ void Status::refreshStatus(Config &config, BibFile &bibfile)
       "%i misc", bibfile.countItems("misc"));
 
 
+  wborder(statusWin, '|', '|', '-', '-', '+', '+', '+', '+');
   wrefresh(statusWin);
 } 

@@ -32,6 +32,9 @@ WINDOW *createWindow(int height, int width, int starty, int startx, int type)
     case 2:
       wborder(localWindow, '|', '|', '-', '-', '+', '+', '+', '+');
       break;
+    case 3:
+      wborder(localWindow, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+      break;
     default:
       break;
   }

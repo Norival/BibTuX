@@ -27,7 +27,7 @@ class Status
 {
   public:
     Status();
-    void refreshStatus(Config &config, BibFile &bibfile);
+    void refreshStatus(Config &config, BibFile &bibfile, const float version);
 
   protected:
     WINDOW *statusWin;
