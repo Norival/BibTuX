@@ -19,7 +19,11 @@ using namespace std;
 
 
 BibFile::BibFile(string bibpath):
-  m_bibPath(bibpath)
+  m_bibPath(bibpath),
+  nItems(0),
+  nArticles(0),
+  nBooks(0),
+  nMisc(0)
 {
   //Constructor
 }
@@ -217,4 +221,43 @@ const void BibFile::listItems(string type)
     if (ch == 'q')
       break;
   }
+}
+
+int BibFile::countItems(const string &type)
+{
+  nItems = 0;
+  nArticles = 0;
+  nBooks = 0;
+  nMisc = 0;
+  for(itemsIterator = listOfItems.begin();
+      itemsIterator != listOfItems.end();
+      ++itemsIterator)
+  {
+    if (itemsIterator->second->getType() == "Article"
+        && type == "article")
+    {
+      nArticles++;
+    }
+    if (itemsIterator->second->getType() == "Book"
+        && type == "boob")
+    {
+      nBooks++;
+    }
+    if (itemsIterator->second->getType() == "Misc"
+        && type == "misc")
+    {
+      nMisc++;
+    }
+  }
+  nItems = listOfItems.size();
+
+  if (type == "article")
+    return nArticles;
+  if (type == "book")
+    return nBooks;
+  if (type == "misc")
+    return nMisc;
+  if (type == "all")
+    return nItems;
+
 }

@@ -151,8 +151,8 @@ void Config::loadConfig()
       Config::initConfig(m_configPath, m_bibPath);
     }
   }
-  else
-    mvprintw(1, 1, "Config file loaded");
+  //else
+    //mvprintw(1, 1, "Config file loaded");
 
   ifstream load(m_configPath.c_str());
 

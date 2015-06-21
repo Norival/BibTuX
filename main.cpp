@@ -31,6 +31,7 @@
 #include<BibFile.h>
 #include<Config.h>
 #include<displayFunctions.hpp>
+#include<Status.hpp>
 
 using namespace std;
 
@@ -47,20 +48,22 @@ int main ()
   int ch;
   int nline = 1;
 
-  printw("Hello! Welcome in Bib Master!");
+  //printw("Hello! Welcome in Bib Master!");
 
   Config currentConfig;
   currentConfig.loadConfig();
   nline++;
 
-  mvprintw(nline, 1, "Reading database");
+  //mvprintw(nline, 1, "Reading database");
   nline++;
   BibFile myBib(currentConfig.getBibpath());
   myBib.readBib(currentConfig.getBibpath());
 
-  mvprintw(nline, 1, "Press d for displaying items");
+  //mvprintw(nline, 1, "Press d for displaying items");
   nline++;
   refresh();
+  Status status;
+  status.refreshStatus(currentConfig, myBib);
 
   while(1)
   {

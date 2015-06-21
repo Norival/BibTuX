@@ -12,42 +12,25 @@
  * BibTuX.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BIBFILE_H
-#define BIBFILE_H
+#ifndef STATUS_H
+#define STATUS_H
 
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<vector>
-#include<map>
+#include<BibFile.h>
+#include <Config.h>
+#include<displayFunctions.hpp>
 
 extern "C" {
 #include <ncurses.h>
 }
 
-#include<BibItem.h>
-#include<displayFunctions.hpp>
-
-class BibFile
+class Status
 {
   public:
-    BibFile(std::string bibpath);
-    void readBib(const std::string &bibpath);
-    const void listItems(std::string type = "all");
-    int countItems(const std::string &type);
+    Status();
+    void refreshStatus(Config &config, BibFile &bibfile);
 
   protected:
-    std::string m_bibPath;
-    std::map<std::string, BibItem*> listOfItems;
-    std::vector<std::string> listOfKeys;
-    std::map<std::string, BibItem*>::iterator itemsIterator;
-    int nItems;
-    int nArticles;
-    int nBooks;
-    int nMisc;
-
-    WINDOW *displayWin;
-
+    WINDOW *statusWin;
 };
 
 #endif
